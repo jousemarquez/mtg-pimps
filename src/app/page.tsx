@@ -43,7 +43,7 @@ export default function Dashboard() {
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
         <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
         <div className="space-y-1">
-          <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">Grand Library</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">Grand Library</h1>
           <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Restoring the archives of classic power</p>
         </div>
         <Link 
@@ -55,7 +55,7 @@ export default function Dashboard() {
       </header>
 
       {/* Primordial KPI Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         <StatsCard 
           label="Total Archives" 
           value={total} 
@@ -83,7 +83,7 @@ export default function Dashboard() {
       </div>
 
       {/* Elemental Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         <StatsCard 
           label="Far Eastern" 
           value={jpCount} 
@@ -117,35 +117,37 @@ export default function Dashboard() {
           
           <div className="old-frame-panel overflow-hidden">
             {topCards.length > 0 ? (
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b-2 border-[#3d342f] bg-[#1a1614]">
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d]">Relic Identity</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-center">Score</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-right">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y-2 divide-[#3d342f]">
-                  {topCards.map((card) => (
-                    <tr key={card.id} className="group hover:bg-[#2b2522] transition-colors">
-                      <td className="px-8 py-6">
-                        <div className="flex flex-col">
-                          <span className="text-base font-black text-[#d9d4c7] font-sans group-hover:text-[#9a784d] transition-colors">{card.name}</span>
-                          <span className="text-[10px] text-[#5d4628] font-black uppercase tracking-widest">{card.set}</span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 text-center">
-                        <div className="parchment-text py-1 px-4 inline-block border border-[#3d342f] shadow-inner">
-                           <span className="text-xl font-black text-[#1a1614] tabular-nums">{calculateScore(card)}</span>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6 text-right transition-transform group-hover:scale-105">
-                        <PimpBadge level={getPimpLabel(card)} />
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[500px]">
+                  <thead>
+                    <tr className="border-b-2 border-[#3d342f] bg-[#1a1614]">
+                      <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d]">Relic Identity</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-center">Score</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-right">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y-2 divide-[#3d342f]">
+                    {topCards.map((card) => (
+                      <tr key={card.id} className="group hover:bg-[#2b2522] transition-colors">
+                        <td className="px-8 py-6">
+                          <div className="flex flex-col">
+                            <span className="text-base font-black text-[#d9d4c7] font-sans group-hover:text-[#9a784d] transition-colors">{card.name}</span>
+                            <span className="text-[10px] text-[#5d4628] font-black uppercase tracking-widest">{card.set}</span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 text-center">
+                          <div className="parchment-text py-1 px-4 inline-block border border-[#3d342f] shadow-inner">
+                             <span className="text-xl font-black text-[#1a1614] tabular-nums">{calculateScore(card)}</span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 text-right transition-transform group-hover:scale-105">
+                          <PimpBadge level={getPimpLabel(card)} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div className="p-20 text-center space-y-6">
                 <Library className="w-16 h-16 text-[#3d342f] mx-auto opacity-20" />

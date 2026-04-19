@@ -16,7 +16,8 @@ import {
   History,
   TrendingUp,
   Flame,
-  Plus
+  Plus,
+  BookOpen
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -59,15 +60,15 @@ export default function DeckDetail({ params }: { params: Promise<{ id: string }>
           <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
           The Archives
         </Link>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
            <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
-           <div className="space-y-1">
-             <h1 className="text-6xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">{deck.name}</h1>
+           <div className="space-y-1 text-center lg:text-left">
+             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">{deck.name}</h1>
              <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Granular Registry & Power Assessment</p>
            </div>
            <Link 
             href="/add" 
-            className="px-8 py-4 bg-[#9a784d] text-[#1a1614] font-black text-[10px] uppercase tracking-[0.3em] rounded hover:bg-[#c4b5a2] transition-all shadow-xl flex items-center gap-2"
+            className="w-full lg:w-auto text-center px-8 py-4 bg-[#9a784d] text-[#1a1614] font-black text-[10px] uppercase tracking-[0.3em] rounded hover:bg-[#c4b5a2] transition-all shadow-xl flex items-center justify-center gap-2"
            >
              <Plus className="w-4 h-4" />
              Inscribe New Copy

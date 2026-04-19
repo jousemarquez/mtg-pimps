@@ -93,23 +93,23 @@ export default function AddCard() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      <header className="border-b-2 border-[#3d342f] pb-8 relative">
-         <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
-        <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic mb-1">New Inscription</h1>
+      <header className="border-b-2 border-[#3d342f] pb-8 relative text-center md:text-left">
+         <div className="absolute -bottom-1 lg:left-0 left-1/2 -translate-x-1/2 lg:translate-x-0 w-24 h-1 bg-[#9a784d]" />
+        <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic mb-1">New Inscription</h1>
         <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Adding a relic to the eternal archives</p>
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-10 pb-24">
         {/* Destination Scroll */}
         <div className="space-y-6">
-          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2">Destination Tome</label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2 text-center md:text-left">Destination Tome</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="relative group">
               <LayoutGrid className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5d4628]" />
               <select 
                 value={deckId}
                 onChange={(e) => setDeckId(e.target.value)}
-                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-12 py-5 text-[#d9d4c7] focus:outline-none focus:border-[#9a784d] transition-all font-serif italic font-bold appearance-none cursor-pointer"
+                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-12 py-5 text-sm text-[#d9d4c7] focus:outline-none focus:border-[#9a784d] transition-all font-serif italic font-bold appearance-none cursor-pointer"
               >
                 <option value="">General Collection (Loose)</option>
                 {decks.map(d => (
@@ -204,8 +204,8 @@ export default function AddCard() {
 
         {/* Mystical Attributes */}
         <div className="space-y-6">
-          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2">Elemental Signatures</label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2 text-center md:text-left">Elemental Signatures</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <Toggle 
               label="Possessed" 
               icon={ShieldCheck} 
@@ -246,31 +246,31 @@ export default function AddCard() {
 
         {/* Prediction Seal */}
         {have && jp && signed && (
-          <div className="old-frame-panel p-8 bg-gradient-to-r from-[#9a784d]/10 to-[#5d4628]/10 border-2 border-[#9a784d] flex items-center justify-between border-dashed animate-glimmer">
-            <div className="flex items-center gap-5">
-              <div className="w-12 h-12 rounded bg-gradient-to-br from-[#9a784d] to-[#5d4628] flex items-center justify-center shadow-lg border border-[#3d342f]">
+          <div className="old-frame-panel p-6 sm:p-8 bg-gradient-to-r from-[#9a784d]/10 to-[#5d4628]/10 border-2 border-[#9a784d] flex flex-col sm:flex-row items-center justify-between gap-6 border-dashed animate-glimmer">
+            <div className="flex items-center gap-5 text-center sm:text-left border-mana-white/10">
+              <div className="w-12 h-12 rounded bg-gradient-to-br from-[#9a784d] to-[#5d4628] flex items-center justify-center shadow-lg border border-[#3d342f] shrink-0">
                 <Flame className="text-[#d9d4c7] w-6 h-6 fill-current" />
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase text-[#9a784d] tracking-[0.3em] mb-1">Ritual Insight</p>
-                <p className="text-2xl font-black text-[#d9d4c7] italic font-sans leading-none">PIMP MAX DETECTED 🔥</p>
+                <p className="text-xl sm:text-2xl font-black text-[#d9d4c7] italic font-sans leading-none">PIMP MAX DETECTED 🔥</p>
               </div>
             </div>
-            <Sparkles className="w-10 h-10 text-[#9a784d] opacity-50" />
+            <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-[#9a784d] opacity-50" />
           </div>
         )}
 
-        <div className="flex items-center gap-6 pt-6">
+        <div className="flex flex-col sm:flex-row items-center gap-6 pt-6">
           <button
             type="submit"
-            className="flex-1 bg-[#9a784d] text-[#1a1614] py-6 rounded border-2 border-[#5d4628] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#c4b5a2] transition-all active:scale-95 shadow-2xl"
+            className="w-full sm:flex-1 bg-[#9a784d] text-[#1a1614] py-6 rounded border-2 border-[#5d4628] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#c4b5a2] transition-all active:scale-95 shadow-2xl"
           >
             Inscribe into Eternal Registry
           </button>
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="p-6 rounded old-frame-panel hover:bg-[#2b2522] transition-all group"
+            className="w-full sm:w-auto p-6 rounded old-frame-panel hover:bg-[#2b2522] transition-all group flex items-center justify-center"
           >
             <X className="w-6 h-6 text-[#5d4628] group-hover:text-[#9a784d]" />
           </button>

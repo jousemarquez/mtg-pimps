@@ -28,10 +28,10 @@ export default function DecksPage() {
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
+      <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
         <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
-        <div className="space-y-1">
-          <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">The Archives</h1>
+        <div className="space-y-1 text-center lg:text-left">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">The Archives</h1>
           <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Managed Decks & Holy Tomes</p>
         </div>
       </header>

@@ -46,25 +46,25 @@ export default function Collection() {
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b-2 border-[#3d342f] pb-8">
-        <div className="space-y-1">
-          <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">The Vault</h1>
+      <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b-2 border-[#3d342f] pb-8">
+        <div className="space-y-1 text-center lg:text-left">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">The Vault</h1>
           <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Registry of Primordial Artifacts</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="relative group">
+        <div className="flex flex-col sm:flex-row items-center gap-6 w-full lg:w-auto">
+          <div className="relative group w-full sm:w-auto">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5d4628] group-hover:text-[#9a784d] transition-colors" />
             <input 
               type="text" 
               placeholder="Seek in archives..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-[#1a1614] border-2 border-[#3d342f] pl-11 pr-4 py-3 rounded text-sm text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all w-72 font-serif font-bold italic"
+              className="bg-[#1a1614] border-2 border-[#3d342f] pl-11 pr-4 py-3 rounded text-sm text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all w-full sm:w-72 font-serif font-bold italic"
             />
           </div>
 
-          <div className="flex bg-[#13110f] p-1.5 rounded border-2 border-[#3d342f]">
+          <div className="flex bg-[#13110f] p-1.5 rounded border-2 border-[#3d342f] w-full sm:w-auto overflow-x-auto no-scrollbar">
             <FilterButton active={filterMode === 'ALL'} onClick={() => setFilterMode('ALL')}>All</FilterButton>
             <FilterButton active={filterMode === 'PIMP'} onClick={() => setFilterMode('PIMP')}>Pimp</FilterButton>
             <FilterButton active={filterMode === 'MAX'} onClick={() => setFilterMode('MAX')}>

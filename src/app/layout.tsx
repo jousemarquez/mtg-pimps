@@ -30,11 +30,11 @@ export default function RootLayout({
       lang="en"
       className={`${spectral.variable} ${ibmPlexSerif.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex bg-background text-foreground font-serif">
+      <body className="min-h-full flex flex-col lg:flex-row bg-background text-foreground font-serif">
         <Sidebar />
-        <main className="flex-1 min-h-screen overflow-y-auto p-8 lg:p-12 relative">
+        <main className="flex-1 min-h-screen overflow-y-auto p-4 md:p-8 lg:p-12 relative">
           <div className="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/parchment.png')]" />
-          <div className="max-w-7xl mx-auto relative z-10">
+          <div className="max-w-7xl mx-auto relative z-10 pb-12">
             {children}
           </div>
         </main>
