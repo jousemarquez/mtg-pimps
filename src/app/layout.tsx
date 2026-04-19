@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Cinzel, EB_Garamond } from "next/font/google";
+import { Spectral, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
+const spectral = Spectral({
+  variable: "--font-spectral",
   subsets: ["latin"],
+  weight: ["400", "700", "800"],
 });
 
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
+const ibmPlexSerif = IBM_Plex_Serif({
+  variable: "--font-ibm-plex-serif",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${ebGaramond.variable} h-full antialiased dark`}
+      className={`${spectral.variable} ${ibmPlexSerif.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex bg-background text-foreground font-serif">
         <Sidebar />
