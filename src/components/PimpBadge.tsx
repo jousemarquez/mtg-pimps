@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { PimpLevel } from "@/store/useCardStore";
-import { Flame, Sparkles, CheckCircle2 } from "lucide-react";
+import { Flame, Sparkles, ShieldCheck } from "lucide-react";
 
 interface PimpBadgeProps {
   level: PimpLevel;
@@ -11,8 +11,8 @@ export default function PimpBadge({ level, className }: PimpBadgeProps) {
   if (level === 'PIMP MAX') {
     return (
       <div className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-tighter uppercase tabular-nums glass border-pimp-max-start/30",
-        "bg-gradient-to-r from-pimp-max-start to-pimp-max-end text-white shadow-lg shadow-pimp-max-start/20 animate-pulse",
+        "inline-flex items-center gap-1.5 px-4 py-1 rounded border-2 border-[#9a784d] text-[10px] font-black uppercase tracking-widest tabular-nums",
+        "bg-gradient-to-br from-[#9a784d] to-[#5d4628] text-[#d9d4c7] shadow-[0_4px_10px_rgba(0,0,0,0.4)] animate-glimmer",
         className
       )}>
         <Flame className="w-3 h-3 fill-current" />
@@ -24,11 +24,11 @@ export default function PimpBadge({ level, className }: PimpBadgeProps) {
   if (level === 'PIMP') {
     return (
       <div className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-tighter uppercase tabular-nums glass border-pimp-start/30",
-        "bg-gradient-to-r from-pimp-start to-pimp-end text-zinc-100",
+        "inline-flex items-center gap-1.5 px-4 py-1 rounded border-2 border-[#4a4a4a] text-[10px] font-black uppercase tracking-widest tabular-nums",
+        "bg-gradient-to-br from-[#7d7d7d] to-[#4a4a4a] text-[#d9d4c7]",
         className
       )}>
-        <Sparkles className="w-3 h-3 text-cyan-400 group-hover:animate-spin" />
+        <Sparkles className="w-3 h-3 text-[#d9d4c7]" />
         PIMP
       </div>
     );
@@ -36,11 +36,11 @@ export default function PimpBadge({ level, className }: PimpBadgeProps) {
 
   return (
     <div className={cn(
-      "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-tighter uppercase tabular-nums glass text-zinc-500 border-white/5",
+      "inline-flex items-center gap-1.5 px-4 py-1 rounded border border-[#3d342f] text-[10px] font-black uppercase tracking-widest tabular-nums text-[#5d4628] bg-[#1a1614]",
       className
     )}>
-      <CheckCircle2 className="w-3 h-3" />
-      NORMAL
+      <ShieldCheck className="w-3 h-3" />
+      COMMON
     </div>
   );
 }

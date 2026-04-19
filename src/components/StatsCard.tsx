@@ -22,30 +22,32 @@ export default function StatsCard({
   iconClassName
 }: StatsCardProps) {
   return (
-    <div className={cn("glass-dark p-6 rounded-2xl relative overflow-hidden group hover:border-white/10 transition-all duration-300", className)}>
-      <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-        <Icon className="w-16 h-16" />
+    <div className={cn("old-frame-panel p-6 group hover:scale-[1.02] transition-all duration-300", className)}>
+      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+        <Icon className="w-20 h-20 text-[#d9d4c7]" />
       </div>
       
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between relative z-10">
         <div className="space-y-1">
-          <p className="text-zinc-500 text-xs font-semibold uppercase tracking-wider">{label}</p>
-          <h3 className="text-3xl font-bold text-white tabular-nums">{value}</h3>
+          <p className="text-[#9a784d] text-[10px] font-black uppercase tracking-[0.2em]">{label}</p>
+          <div className="parchment-text py-1 px-3 mt-1 inline-block border-2 border-[#3d342f] shadow-inner">
+             <h3 className="text-3xl font-black text-[#1a1614] tabular-nums font-sans leading-none">{value}</h3>
+          </div>
         </div>
-        <div className={cn("p-2 rounded-lg bg-zinc-800/50 border border-white/5", iconClassName)}>
-          <Icon className="w-5 h-5" />
+        <div className={cn("p-2 rounded bg-[#1a1614] border border-[#9a784d]/30 shadow-lg", iconClassName)}>
+          <Icon className="w-5 h-5 text-[#9a784d]" />
         </div>
       </div>
 
       {trend && (
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-4 flex items-center gap-2 relative z-10">
           <span className={cn(
-            "text-[10px] font-bold px-1.5 py-0.5 rounded",
-            trend.isUp ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"
+            "text-[9px] font-black uppercase tracking-tighter px-2 py-0.5 rounded border border-current shadow-sm",
+            trend.isUp ? "bg-emerald-900/20 text-emerald-600" : "bg-rose-900/20 text-rose-600"
           )}>
-            {trend.isUp ? '+' : '-'}{trend.value}%
+            {trend.isUp ? 'Superior' : 'Inferior'} {trend.value}%
           </span>
-          <span className="text-[10px] text-zinc-600 font-medium">vs last month</span>
+          <span className="text-[9px] text-[#5d4628] font-black uppercase tracking-widest italic">vs past cycle</span>
         </div>
       )}
     </div>

@@ -9,10 +9,12 @@ import {
   Flame, 
   Sparkles, 
   PenTool, 
-  Cpu, 
-  Globe2,
-  CheckCircle2,
-  X
+  Target, 
+  Map,
+  ShieldCheck,
+  X,
+  History,
+  BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -68,7 +70,7 @@ export default function AddCard() {
 
     addCard({
       name,
-      set: set || "Default Set",
+      set: set || "Classic Edition",
       have,
       jp,
       foil,
@@ -80,38 +82,39 @@ export default function AddCard() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <header>
-        <h1 className="text-4xl font-black tracking-tight text-white mb-2">Add New Card</h1>
-        <p className="text-zinc-500 font-medium">Expand your collection with a new premium asset.</p>
+    <div className="max-w-3xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <header className="border-b-2 border-[#3d342f] pb-8 relative">
+         <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
+        <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic mb-1">New Inscription</h1>
+        <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Adding a relic to the eternal archives</p>
       </header>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name & Set */}
-        <div className="glass-dark p-8 rounded-3xl space-y-6 border border-white/5">
+      <form onSubmit={handleSubmit} className="space-y-10">
+        {/* Scroll Information */}
+        <div className="old-frame-panel p-10 space-y-8">
           <div className="relative">
-            <label className="block text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2 px-1">Card Name</label>
+            <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] mb-3">Relic Identity (Name)</label>
             <div className="relative">
               <input
                 type="text"
                 value={name}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Black Lotus..."
-                className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-pimp-max-start/50 transition-all"
+                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-6 py-5 text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all font-serif italic text-lg shadow-inner"
                 required
               />
-              <Search className={cn("absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-600", isSearching && "animate-pulse")} />
+              <Search className={cn("absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#3d342f]", isSearching && "animate-pulse")} />
             </div>
 
-            {/* Scryfall Auto-complete */}
+            {/* Ancient Suggestions */}
             {searchResults.length > 0 && (
-              <div className="absolute z-50 w-full mt-2 glass-dark rounded-2xl border border-white/10 shadow-2xl overflow-hidden max-h-60 overflow-y-auto">
+              <div className="absolute z-50 w-full mt-2 bg-[#1a1614] rounded border-2 border-[#9a784d]/50 shadow-2xl overflow-hidden max-h-72 overflow-y-auto">
                 {searchResults.map((result) => (
                   <button
                     key={result.name}
                     type="button"
                     onClick={() => selectCard(result.name)}
-                    className="w-full text-left px-5 py-3 text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-colors border-b border-white/5 last:border-0"
+                    className="w-full text-left px-6 py-4 text-sm text-[#9a784d] hover:bg-[#2b2522] hover:text-[#d9d4c7] transition-colors border-b border-[#3d342f] last:border-0 font-bold italic"
                   >
                     {result.name}
                   </button>
@@ -121,88 +124,88 @@ export default function AddCard() {
           </div>
 
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2 px-1">Set Name</label>
+            <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] mb-3">Era of Manifestation (Set)</label>
             <input
               type="text"
               value={set}
               onChange={(e) => setSet(e.target.value)}
-              placeholder="Alpha, Modern Horizons 3..."
-              className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-700 transition-all font-medium"
+              placeholder="Alpha, Antiquities, Arabian Nights..."
+              className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-6 py-5 text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all font-serif font-bold italic shadow-inner"
             />
           </div>
         </div>
 
-        {/* Pimp Attributes */}
-        <div className="space-y-4">
-          <label className="block text-[10px] font-black uppercase tracking-widest text-zinc-500 px-1">Pimp Attributes</label>
-          <div className="grid grid-cols-2 gap-4">
+        {/* Mystical Attributes */}
+        <div className="space-y-6">
+          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2">Elemental Signatures</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Toggle 
-              label="Owned" 
-              icon={CheckCircle2} 
+              label="Possessed" 
+              icon={ShieldCheck} 
               active={have} 
               onClick={() => setHave(!have)} 
-              activeClass="border-emerald-500/50 bg-emerald-500/10 text-emerald-500"
+              activeClass="border-mana-green text-mana-green bg-mana-green/10"
             />
             <Toggle 
-              label="Japanese" 
-              icon={Globe2} 
+              label="Eastern Origin" 
+              icon={Map} 
               active={jp} 
               onClick={() => setJp(!jp)} 
-              activeClass="border-red-500/50 bg-red-500/10 text-red-500"
+              activeClass="border-mana-red text-mana-red bg-mana-red/10"
             />
             <Toggle 
-              label="Foil" 
+              label="Prismatic" 
               icon={Sparkles} 
               active={foil} 
               onClick={() => setFoil(!foil)} 
-              activeClass="border-purple-500/50 bg-purple-500/10 text-purple-500"
+              activeClass="border-mana-blue text-mana-blue bg-mana-blue/10"
             />
             <Toggle 
-              label="Signed" 
+              label="Master Signed" 
               icon={PenTool} 
               active={signed} 
               onClick={() => setSigned(!signed)} 
-              activeClass="border-blue-500/50 bg-blue-500/10 text-blue-500"
+              activeClass="border-[#9a784d] text-[#9a784d] bg-[#9a784d]/10"
             />
             <Toggle 
-              label="Altered" 
-              icon={Cpu} 
+              label="Altered Soul" 
+              icon={Target} 
               active={altered} 
               onClick={() => setAltered(!altered)} 
-              activeClass="border-pimp-max-start/50 bg-pimp-max-start/10 text-pimp-max-start"
+              activeClass="border-[#5d4628] text-[#5d4628] bg-[#5d4628]/10"
             />
           </div>
         </div>
 
-        {/* Pimp Status Preview */}
+        {/* Prediction Seal */}
         {have && jp && signed && (
-          <div className="glass p-6 rounded-3xl bg-gradient-to-r from-pimp-max-start/20 to-pimp-max-end/20 border-pimp-max-start/30 flex items-center justify-between border-2 border-dashed">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-pimp-max-start flex items-center justify-center">
-                <Flame className="text-white w-5 h-5" />
+          <div className="old-frame-panel p-8 bg-gradient-to-r from-[#9a784d]/10 to-[#5d4628]/10 border-2 border-[#9a784d] flex items-center justify-between border-dashed animate-glimmer">
+            <div className="flex items-center gap-5">
+              <div className="w-12 h-12 rounded bg-gradient-to-br from-[#9a784d] to-[#5d4628] flex items-center justify-center shadow-lg border border-[#3d342f]">
+                <Flame className="text-[#d9d4c7] w-6 h-6 fill-current" />
               </div>
               <div>
-                <p className="text-xs font-black uppercase text-pimp-max-start tracking-tighter">Status Predicted</p>
-                <p className="text-lg font-black text-white italic">PIMP MAX DETECTED 🔥</p>
+                <p className="text-[10px] font-black uppercase text-[#9a784d] tracking-[0.3em] mb-1">Ritual Insight</p>
+                <p className="text-2xl font-black text-[#d9d4c7] italic font-sans leading-none">PIMP MAX DETECTED 🔥</p>
               </div>
             </div>
-            <Sparkles className="w-8 h-8 text-pimp-max-start animate-pulse" />
+            <Sparkles className="w-10 h-10 text-[#9a784d] opacity-50" />
           </div>
         )}
 
-        <div className="flex items-center gap-4 pt-4">
+        <div className="flex items-center gap-6 pt-6">
           <button
             type="submit"
-            className="flex-1 bg-white text-black py-5 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all active:scale-95 shadow-2xl shadow-white/5"
+            className="flex-1 bg-[#9a784d] text-[#1a1614] py-6 rounded border-2 border-[#5d4628] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#c4b5a2] transition-all active:scale-95 shadow-2xl"
           >
-            Add To Collection
+            Inscribe into Eternal Registry
           </button>
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="p-5 rounded-3xl glass-dark hover:bg-white/5 transition-all"
+            className="p-6 rounded old-frame-panel hover:bg-[#2b2522] transition-all group"
           >
-            <X className="w-6 h-6 text-zinc-500" />
+            <X className="w-6 h-6 text-[#5d4628] group-hover:text-[#9a784d]" />
           </button>
         </div>
       </form>
@@ -216,17 +219,17 @@ function Toggle({ label, icon: Icon, active, onClick, activeClass }: any) {
       type="button"
       onClick={onClick}
       className={cn(
-        "flex items-center justify-between px-5 py-4 rounded-2xl border border-white/5 glass-dark transition-all duration-300",
-        active ? activeClass : "text-zinc-500 grayscale opacity-60"
+        "flex items-center justify-between px-6 py-5 rounded border-2 border-[#3d342f] bg-[#1a1614] transition-all duration-300",
+        active ? activeClass : "text-[#3d342f] grayscale opacity-40 hover:opacity-60"
       )}
     >
-      <div className="flex items-center gap-3">
-        <Icon className="w-5 h-5" />
-        <span className="text-xs font-bold">{label}</span>
+      <div className="flex items-center gap-4">
+        <Icon className={cn("w-5 h-5", active ? "text-current" : "text-[#3d342f]")} />
+        <span className="text-[10px] font-black uppercase tracking-widest leading-none">{label}</span>
       </div>
       <div className={cn(
-        "w-2 h-2 rounded-full",
-        active ? "bg-current shadow-[0_0_8px_currentColor]" : "bg-zinc-800"
+        "w-2 h-2 rounded-sm transition-all duration-300",
+        active ? "bg-current shadow-[0_0_8px_currentColor]" : "bg-[#13110f]"
       )} />
     </button>
   );

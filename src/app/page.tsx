@@ -4,15 +4,16 @@ import { useCardStore, calculateScore, getPimpLabel } from "@/store/useCardStore
 import StatsCard from "@/components/StatsCard";
 import PimpBadge from "@/components/PimpBadge";
 import { 
-  Layers, 
-  CheckCircle2, 
-  Percent, 
-  Globe2, 
+  Library, 
+  ShieldCheck, 
+  Zap, 
+  Map, 
   Sparkles, 
   PenTool, 
   Flame,
-  ArrowRight,
-  TrendingUp
+  ChevronRight,
+  TrendingUp,
+  History
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -21,7 +22,6 @@ export default function Dashboard() {
   const { getStats } = useCardStore();
   const [stats, setStats] = useState(getStats());
 
-  // Update stats on mount to avoid hydration mismatch if localstorage has data
   useEffect(() => {
     setStats(getStats());
   }, [getStats]);
@@ -38,110 +38,108 @@ export default function Dashboard() {
   } = stats;
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      {/* Header */}
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight text-white mb-2">Dashboard</h1>
-          <p className="text-zinc-500 font-medium">Welcome back, Collector. Your pimp status is looking strong.</p>
+    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      {/* Ancient Header */}
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-2 border-[#3d342f] pb-8 relative">
+        <div className="absolute -bottom-1 left-0 w-24 h-1 bg-[#9a784d]" />
+        <div className="space-y-1">
+          <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">Grand Library</h1>
+          <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Restoring the archives of classic power</p>
         </div>
         <Link 
           href="/collection" 
-          className="flex items-center gap-2 text-pimp-max-start font-bold text-sm hover:gap-3 transition-all"
+          className="flex items-center gap-2 text-[#d9d4c7] font-black text-xs uppercase tracking-widest hover:text-[#9a784d] transition-all group"
         >
-          View Full Collection <ArrowRight className="w-4 h-4" />
+          Consult the Vault <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </header>
 
-      {/* KPI Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Primordial KPI Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <StatsCard 
-          label="Total Cards" 
+          label="Total Archives" 
           value={total} 
-          icon={Layers} 
-          iconClassName="text-cyan-500"
+          icon={Library} 
+          iconClassName="border-mana-white/30"
         />
         <StatsCard 
-          label="Owned Cards" 
+          label="Sanctified" 
           value={owned} 
-          icon={CheckCircle2} 
-          iconClassName="text-emerald-500"
+          icon={ShieldCheck} 
+          iconClassName="border-mana-green/30"
         />
         <StatsCard 
-          label="Completion" 
+          label="Restoration" 
           value={`${completion}%`} 
-          icon={Percent} 
-          iconClassName="text-indigo-500"
+          icon={History} 
+          iconClassName="border-mana-blue/30"
         />
         <StatsCard 
-          label="Pimp Ratio" 
+          label="Pimp Essence" 
           value={`${pimpRatio}%`} 
           icon={TrendingUp} 
-          iconClassName="text-pimp-max-start"
+          iconClassName="border-pimp-max-start/30"
         />
       </div>
 
-      {/* Secondary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Elemental Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <StatsCard 
-          label="Japanese" 
+          label="Far Eastern" 
           value={jpCount} 
-          icon={Globe2} 
-          iconClassName="text-red-400"
-          className="bg-red-500/5"
+          icon={Map} 
+          iconClassName="border-mana-red/30"
+          className="border-mana-red/10"
         />
         <StatsCard 
-          label="Foil / Holo" 
+          label="Prismatic" 
           value={foilCount} 
           icon={Sparkles} 
-          iconClassName="text-purple-400"
-          className="bg-purple-500/5"
+          iconClassName="border-mana-blue/30"
+          className="border-mana-blue/10"
         />
         <StatsCard 
-          label="Signed By Artist" 
+          label="Artist Sealed" 
           value={signedCount} 
           icon={PenTool} 
-          iconClassName="text-blue-400"
-          className="bg-blue-500/5"
+          iconClassName="border-pimp-max-end/30"
+          className="border-pimp-max-end/10"
         />
       </div>
 
-      {/* Bottom Layout: Top Cards & Insights */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Top Cards List */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Flame className="w-5 h-5 text-pimp-max-start" />
-              Highest Score Cards
-            </h2>
-          </div>
+      {/* The Scriptorium: Top Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pt-4">
+        <div className="lg:col-span-2 space-y-8">
+          <h2 className="text-2xl font-black text-[#d9d4c7] flex items-center gap-3 font-sans uppercase tracking-tight">
+            <Flame className="w-6 h-6 text-[#9a784d]" />
+            Relics of High Power
+          </h2>
           
-          <div className="glass-dark rounded-3xl overflow-hidden">
+          <div className="old-frame-panel overflow-hidden">
             {topCards.length > 0 ? (
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/5 bg-white/5">
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500">Card Name</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500 text-center">Score</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-500 text-right">Status</th>
+                  <tr className="border-b-2 border-[#3d342f] bg-[#1a1614]">
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d]">Relic Identity</th>
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-center">Score</th>
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] text-right">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y-2 divide-[#3d342f]">
                   {topCards.map((card) => (
-                    <tr key={card.id} className="group hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4">
+                    <tr key={card.id} className="group hover:bg-[#2b2522] transition-colors">
+                      <td className="px-8 py-6">
                         <div className="flex flex-col">
-                          <span className="text-sm font-bold text-white">{card.name}</span>
-                          <span className="text-[10px] text-zinc-500 font-medium">{card.set}</span>
+                          <span className="text-base font-black text-[#d9d4c7] font-sans group-hover:text-[#9a784d] transition-colors">{card.name}</span>
+                          <span className="text-[10px] text-[#5d4628] font-black uppercase tracking-widest">{card.set}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center">
-                        <span className="text-lg font-black text-pimp-max-start tabular-nums">
-                          {calculateScore(card)}
-                        </span>
+                      <td className="px-8 py-6 text-center">
+                        <div className="parchment-text py-1 px-4 inline-block border border-[#3d342f] shadow-inner">
+                           <span className="text-xl font-black text-[#1a1614] tabular-nums">{calculateScore(card)}</span>
+                        </div>
                       </td>
-                      <td className="px-6 py-4 text-right transition-transform group-hover:scale-105">
+                      <td className="px-8 py-6 text-right transition-transform group-hover:scale-105">
                         <PimpBadge level={getPimpLabel(card)} />
                       </td>
                     </tr>
@@ -149,57 +147,41 @@ export default function Dashboard() {
                 </tbody>
               </table>
             ) : (
-              <div className="p-12 text-center space-y-4">
-                <Layers className="w-12 h-12 text-zinc-800 mx-auto" />
-                <p className="text-zinc-500 text-sm font-medium">No cards in collection yet.</p>
-                <Link href="/add" className="inline-block px-6 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-zinc-200 transition-colors">
-                  Add Your First Card
+              <div className="p-20 text-center space-y-6">
+                <Library className="w-16 h-16 text-[#3d342f] mx-auto opacity-20" />
+                <p className="text-[#9a784d] text-sm font-black uppercase tracking-widest italic">The archives are empty, seeker.</p>
+                <Link href="/add" className="inline-block px-10 py-3 bg-[#9a784d] text-[#1a1614] text-xs font-black uppercase tracking-widest rounded hover:bg-[#c4b5a2] transition-all">
+                  Inscribe First Entry
                 </Link>
               </div>
             )}
           </div>
         </div>
 
-        {/* Insights/Quick Actions */}
-        <div className="space-y-6">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            Quick Actions
-          </h2>
-          <div className="space-y-4">
-            <Link href="/add" className="block glass-dark p-6 rounded-3xl group hover:border-pimp-max-start/30 transition-all border border-transparent">
-              <PlusCircleIcon className="w-8 h-8 text-pimp-max-start mb-3" />
-              <h3 className="font-bold text-white mb-1">New Entry</h3>
-              <p className="text-xs text-zinc-500">Register a new card to your pimp collection.</p>
+        {/* Scroll of Discovery */}
+        <div className="space-y-8">
+          <h2 className="text-2xl font-black text-[#d9d4c7] font-sans uppercase tracking-tight">Tasks</h2>
+          <div className="space-y-6">
+            <Link href="/add" className="block old-frame-panel p-8 group hover:border-[#9a784d] transition-all">
+               <div className="w-12 h-12 rounded bg-[#1a1614] border border-[#9a784d]/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <PenTool className="w-6 h-6 text-[#9a784d]" />
+              </div>
+              <h3 className="text-lg font-black text-[#d9d4c7] font-sans mb-2">New Inscription</h3>
+              <p className="text-xs text-[#9a784d] leading-relaxed italic">Seal a new card into the official collection triptych.</p>
             </Link>
             
-            <div className="glass-dark p-6 rounded-3xl space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-widest text-zinc-500">System Tip</h3>
-              <p className="text-xs text-zinc-300 leading-relaxed">
-                Remember: <span className="text-pimp-max-start font-bold">PIMP MAX 🔥</span> requires Have + JP + Signed. Foil and Altered are bonus points!
+            <div className="old-frame-panel p-8 space-y-4 border-dashed">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#9a784d] flex items-center gap-2">
+                <Zap className="w-3 h-3" />
+                Sages Wisdom
+              </h3>
+              <p className="text-xs text-[#9a784d] leading-relaxed italic">
+                "To achieve <span className="text-[#d9d4c7] font-black">TRUE ASCENSION</span>, one must possess the card, its original Japanese ink, and the master's signature."
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-function PlusCircleIcon({ className }: { className?: string }) {
-  return (
-    <svg 
-      className={className} 
-      xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2.5" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="8" x2="12" y2="16" />
-      <line x1="8" y1="12" x2="16" y2="12" />
-    </svg>
   );
 }

@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cinzel, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ebGaramond = EB_Garamond({
+  variable: "--font-eb-garamond",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "MTG Pimp Collection Manager",
-  description: "Manage your premium Magic: The Gathering collection",
+  title: "MTG Pimp Collection Manager | Old Frame",
+  description: "A tribute to the golden era of Magic: The Gathering",
 };
 
 export default function RootLayout({
@@ -26,12 +26,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${cinzel.variable} ${ebGaramond.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex bg-background text-foreground">
+      <body className="min-h-full flex bg-background text-foreground font-serif">
         <Sidebar />
-        <main className="flex-1 min-h-screen overflow-y-auto p-8 lg:p-12">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 min-h-screen overflow-y-auto p-8 lg:p-12 relative">
+          <div className="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/parchment.png')]" />
+          <div className="max-w-7xl mx-auto relative z-10">
             {children}
           </div>
         </main>

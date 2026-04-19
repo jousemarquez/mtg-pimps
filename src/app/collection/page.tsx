@@ -7,14 +7,15 @@ import {
   Search, 
   Filter, 
   Trash2, 
-  ExternalLink,
+  Scroll,
   ChevronDown,
-  Globe2,
+  Map,
   Sparkles,
   PenTool,
-  Cpu,
-  CheckCircle2,
-  Flame
+  ShieldCheck,
+  Flame,
+  Sword,
+  Target
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -44,119 +45,117 @@ export default function Collection() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <h1 className="text-4xl font-black tracking-tight text-white mb-2 text-balance">The Vault</h1>
-          <p className="text-zinc-500 font-medium">Your personal treasury of high-end Magic assets.</p>
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b-2 border-[#3d342f] pb-8">
+        <div className="space-y-1">
+          <h1 className="text-5xl font-black tracking-tighter text-[#d9d4c7] font-sans italic">The Vault</h1>
+          <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Registry of Primordial Artifacts</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5d4628] group-hover:text-[#9a784d] transition-colors" />
             <input 
               type="text" 
-              placeholder="Filter collection..."
+              placeholder="Seek in archives..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-black/40 border border-white/5 pl-11 pr-4 py-3 rounded-2xl text-sm text-white placeholder:text-zinc-700 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all w-64"
+              className="bg-[#1a1614] border-2 border-[#3d342f] pl-11 pr-4 py-3 rounded text-sm text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all w-72 font-serif font-bold italic"
             />
           </div>
 
-          <div className="flex bg-zinc-900/50 p-1 rounded-2xl border border-white/5">
+          <div className="flex bg-[#13110f] p-1.5 rounded border-2 border-[#3d342f]">
             <FilterButton active={filterMode === 'ALL'} onClick={() => setFilterMode('ALL')}>All</FilterButton>
             <FilterButton active={filterMode === 'PIMP'} onClick={() => setFilterMode('PIMP')}>Pimp</FilterButton>
             <FilterButton active={filterMode === 'MAX'} onClick={() => setFilterMode('MAX')}>
-              <Flame className={cn("w-3 h-3", filterMode === 'MAX' ? "text-pimp-max-start" : "text-zinc-600")} />
+              <Flame className={cn("w-3 h-3 transition-colors", filterMode === 'MAX' ? "text-[#d9d4c7]" : "text-[#5d4628]")} />
             </FilterButton>
           </div>
         </div>
       </header>
 
-      {/* Main Table Container */}
-      <div className="glass-dark rounded-[32px] overflow-hidden border border-white/5 shadow-2xl">
+      {/* Ancient Ledger */}
+      <div className="old-frame-panel overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[800px]">
+          <table className="w-full text-left border-collapse min-w-[900px]">
             <thead>
-              <tr className="bg-white/[0.02] border-b border-white/5">
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Asset Detail</th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 text-center">Attributes</th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 text-center">Score</th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 text-right">Label</th>
-                <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 w-24"></th>
+              <tr className="bg-[#1a1614] border-b-2 border-[#3d342f]">
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d]">Relic Desc.</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] text-center">Inscriptions</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] text-center">Essence</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] text-right">Seal</th>
+                <th className="px-8 py-6 w-24"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y-2 divide-[#3d342f]">
               {filteredCards.map((card) => (
-                <tr key={card.id} className="group hover:bg-white/[0.03] transition-colors relative">
-                  <td className="px-6 py-6">
+                <tr key={card.id} className="group hover:bg-[#2b2522] transition-colors relative">
+                  <td className="px-8 py-8">
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-sm font-bold text-white group-hover:text-pimp-max-start transition-colors uppercase tracking-tight">{card.name}</span>
-                      <span className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">{card.set}</span>
+                      <span className="text-base font-black text-[#d9d4c7] group-hover:text-[#9a784d] transition-colors font-sans uppercase tracking-tight italic">{card.name}</span>
+                      <span className="text-[10px] text-[#5d4628] font-black uppercase tracking-widest leading-none">{card.set}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-6">
+                  <td className="px-8 py-8">
                     <div className="flex items-center justify-center gap-1">
                       <CompactToggle 
-                        icon={CheckCircle2} 
+                        icon={ShieldCheck} 
                         active={card.have} 
                         onClick={() => toggleAttribute(card.id, 'have', card.have)}
-                        activeColor="text-emerald-500"
+                        activeColor="text-mana-green"
                         label="HAVE"
                       />
                       <CompactToggle 
-                        icon={Globe2} 
+                        icon={Map} 
                         active={card.jp} 
                         onClick={() => toggleAttribute(card.id, 'jp', card.jp)}
-                        activeColor="text-red-500"
+                        activeColor="text-mana-red"
                         label="JP"
                       />
                       <CompactToggle 
                         icon={Sparkles} 
                         active={card.foil} 
                         onClick={() => toggleAttribute(card.id, 'foil', card.foil)}
-                        activeColor="text-purple-500"
+                        activeColor="text-mana-blue"
                         label="FOIL"
                       />
                       <CompactToggle 
                         icon={PenTool} 
                         active={card.signed} 
                         onClick={() => toggleAttribute(card.id, 'signed', card.signed)}
-                        activeColor="text-blue-500"
-                        label="SIGNED"
+                        activeColor="text-[#9a784d]"
+                        label="SIG"
                       />
                       <CompactToggle 
-                        icon={Cpu} 
+                        icon={Target} 
                         active={card.altered} 
                         onClick={() => toggleAttribute(card.id, 'altered', card.altered)}
-                        activeColor="text-amber-500"
-                        label="ALTER"
+                        activeColor="text-[#5d4628]"
+                        label="ALT"
                       />
                     </div>
                   </td>
-                  <td className="px-6 py-6 text-center">
-                    <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/5 shadow-inner">
+                  <td className="px-8 py-8 text-center">
+                    <div className="parchment-text p-0 w-12 h-12 flex items-center justify-center border-2 border-[#3d342f] shadow-inner mx-auto">
                       <span className={cn(
-                        "text-sm font-black tabular-nums transition-colors",
-                        calculateScore(card) >= 5 ? "text-pimp-max-start" : "text-white"
+                        "text-xl font-black tabular-nums transition-colors",
+                        calculateScore(card) >= 5 ? "text-mana-red" : "text-[#1a1614]"
                       )}>
                         {calculateScore(card)}
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-6 text-right">
+                  <td className="px-8 py-8 text-right">
                     <PimpBadge level={getPimpLabel(card)} />
                   </td>
-                  <td className="px-6 py-6 text-right opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="flex items-center justify-end gap-2">
-                       <button 
-                        onClick={() => removeCard(card.id)}
-                        className="p-2 rounded-lg hover:bg-rose-500/10 text-zinc-600 hover:text-rose-500 transition-all active:scale-90"
-                        title="Delete asset"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+                  <td className="px-8 py-8 text-right opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => removeCard(card.id)}
+                      className="p-3 rounded bg-[#1a1614] border border-[#3d342f] text-[#5d4628] hover:text-mana-red hover:border-mana-red/50 transition-all active:scale-90"
+                      title="Exterminate entry"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -164,13 +163,11 @@ export default function Collection() {
           </table>
           
           {filteredCards.length === 0 && (
-            <div className="p-20 text-center space-y-4">
-              <div className="w-16 h-16 rounded-3xl glass-dark flex items-center justify-center mx-auto text-zinc-700">
-                <Search className="w-8 h-8" />
-              </div>
-              <div>
-                <p className="text-white font-bold">No assets found</p>
-                <p className="text-zinc-500 text-xs">Try adjusting your filters or adding a new card.</p>
+            <div className="p-32 text-center space-y-6">
+              <Scroll className="w-20 h-20 text-[#3d342f] mx-auto opacity-10" />
+              <div className="space-y-2">
+                <p className="text-[#d9d4c7] text-xl font-black italic">Archival Vacuum</p>
+                <p className="text-[#9a784d] text-[10px] font-black uppercase tracking-[0.2em] max-w-xs mx-auto">No relics match your seekers inquiry. Redefine your search or inscribe new history.</p>
               </div>
             </div>
           )}
@@ -185,8 +182,8 @@ function FilterButton({ children, active, onClick }: { children: React.ReactNode
     <button
       onClick={onClick}
       className={cn(
-        "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
-        active ? "bg-white text-black shadow-lg" : "text-zinc-500 hover:text-zinc-300"
+        "px-5 py-2.5 rounded text-[10px] font-black uppercase tracking-widest transition-all",
+        active ? "bg-[#9a784d] text-[#1a1614] shadow-lg" : "text-[#5d4628] hover:text-[#d9d4c7]"
       )}
     >
       {children}
@@ -199,16 +196,16 @@ function CompactToggle({ icon: Icon, active, onClick, activeColor, label }: any)
     <button
       onClick={onClick}
       className={cn(
-        "group/toggle flex flex-col items-center gap-1.5 p-2 rounded-xl border border-transparent transition-all hover:bg-white/5",
-        active ? cn("bg-white/[0.03] border-white/5", activeColor) : "text-zinc-700 grayscale"
+        "group/toggle flex flex-col items-center gap-2 p-3 rounded border-2 border-transparent transition-all",
+        active ? cn("bg-[#1a1614] border-[#3d342f]", activeColor) : "text-[#3d342f] grayscale opacity-40 hover:opacity-60"
       )}
       title={label}
     >
       <Icon className="w-4 h-4" />
-      <span className="text-[8px] font-black tracking-tighter hidden sm:block">{label}</span>
+      <span className="text-[8px] font-black tracking-tighter hidden sm:block italic uppercase">{label}</span>
       <div className={cn(
-        "w-1 h-1 rounded-full transition-all duration-300",
-        active ? "bg-current shadow-[0_0_8px_currentColor] scale-100" : "bg-zinc-800 scale-50"
+        "w-1.5 h-1.5 rounded-sm transition-all duration-300",
+        active ? "bg-current shadow-[0_0_8px_currentColor] scale-100" : "bg-[#13110f] scale-50"
       )} />
     </button>
   );
