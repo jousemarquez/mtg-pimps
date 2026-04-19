@@ -14,7 +14,9 @@ import {
   ShieldCheck,
   X,
   History,
-  BookOpen
+  BookOpen,
+  LayoutGrid,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +27,7 @@ interface ScryfallResult {
 
 export default function AddCard() {
   const router = useRouter();
-  const { addCard } = useCardStore();
+  const { addCard, decks } = useCardStore();
   
   const [name, setName] = useState("");
   const [set, setSet] = useState("");
@@ -34,6 +36,11 @@ export default function AddCard() {
   const [foil, setFoil] = useState(false);
   const [signed, setSigned] = useState(false);
   const [altered, setAltered] = useState(false);
+  
+  // Deck specific
+  const [deckId, setDeckId] = useState<string>("");
+  const [position, setPosition] = useState<'MAIN' | 'SIDE'>('MAIN');
+  const [count, setCount] = useState(1);
 
   const [searchResults, setSearchResults] = useState<ScryfallResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -76,9 +83,12 @@ export default function AddCard() {
       foil,
       signed,
       altered,
-    });
+      deckId: deckId || undefined,
+      position,
+      copyNumber: 1, // Store will handle incrementing if count > 1
+    }, count);
 
-    router.push("/");
+    router.push(deckId ? `/decks/${deckId}` : "/collection");
   };
 
   return (
@@ -89,7 +99,51 @@ export default function AddCard() {
         <p className="text-[#9a784d] font-black uppercase tracking-[0.3em] text-[10px]">Adding a relic to the eternal archives</p>
       </header>
 
-      <form onSubmit={handleSubmit} className="space-y-10">
+      <form onSubmit={handleSubmit} className="space-y-10 pb-24">
+        {/* Destination Scroll */}
+        <div className="space-y-6">
+          <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] px-2">Destination Tome</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative group">
+              <LayoutGrid className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5d4628]" />
+              <select 
+                value={deckId}
+                onChange={(e) => setDeckId(e.target.value)}
+                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-12 py-5 text-[#d9d4c7] focus:outline-none focus:border-[#9a784d] transition-all font-serif italic font-bold appearance-none cursor-pointer"
+              >
+                <option value="">General Collection (Loose)</option>
+                {decks.map(d => (
+                  <option key={d.id} value={d.id}>{d.name}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5d4628] pointer-events-none" />
+            </div>
+
+            <div className="flex bg-[#13110f] p-1.5 rounded border-2 border-[#3d342f]">
+              <button 
+                type="button"
+                onClick={() => setPosition('MAIN')}
+                className={cn(
+                  "flex-1 py-3 rounded text-[10px] font-black uppercase tracking-widest transition-all",
+                  position === 'MAIN' ? "bg-[#9a784d] text-[#1a1614]" : "text-[#5d4628] hover:text-[#9a784d]"
+                )}
+              >
+                Mainboard
+              </button>
+              <button 
+                type="button"
+                onClick={() => setPosition('SIDE')}
+                className={cn(
+                  "flex-1 py-3 rounded text-[10px] font-black uppercase tracking-widest transition-all",
+                  position === 'SIDE' ? "bg-[#9a784d] text-[#1a1614]" : "text-[#5d4628] hover:text-[#9a784d]"
+                )}
+              >
+                Sideboard
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Scroll Information */}
         <div className="old-frame-panel p-10 space-y-8">
           <div className="relative">
@@ -123,15 +177,28 @@ export default function AddCard() {
             )}
           </div>
 
-          <div>
-            <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] mb-3">Era of Manifestation (Set)</label>
-            <input
-              type="text"
-              value={set}
-              onChange={(e) => setSet(e.target.value)}
-              placeholder="Alpha, Antiquities, Arabian Nights..."
-              className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-6 py-5 text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all font-serif font-bold italic shadow-inner"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] mb-3">Era of Manifestation (Set)</label>
+              <input
+                type="text"
+                value={set}
+                onChange={(e) => setSet(e.target.value)}
+                placeholder="Alpha, Antiquities, Arabian Nights..."
+                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-6 py-5 text-[#d9d4c7] placeholder:text-[#3d342f] focus:outline-none focus:border-[#9a784d] transition-all font-serif font-bold italic shadow-inner"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-[#9a784d] mb-3">Multiplicity (Copies)</label>
+              <input
+                type="number"
+                min="1"
+                max="100"
+                value={count}
+                onChange={(e) => setCount(parseInt(e.target.value) || 1)}
+                className="w-full bg-[#1a1614] border-2 border-[#3d342f] rounded px-6 py-5 text-[#d9d4c7] focus:outline-none focus:border-[#9a784d] transition-all font-sans font-black text-xl text-center"
+              />
+            </div>
           </div>
         </div>
 

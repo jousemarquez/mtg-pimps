@@ -9,18 +9,27 @@ import {
   Settings, 
   User, 
   BookOpen,
-  CloudLightning
+  CloudLightning,
+  Plus,
+  LayoutGrid
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCardStore } from '@/store/useCardStore';
 
 const navItems = [
   { name: 'Dashboard', href: '/', icon: Library },
   { name: 'The Vault', href: '/collection', icon: Scroll },
-  { name: 'Register', href: '/add', icon: PenTool },
+  { name: 'Decks', href: '/decks', icon: LayoutGrid },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { decks, addDeck } = useCardStore();
+
+  const handleAddDeck = () => {
+    const name = prompt("Name your new archive (Deck):");
+    if (name) addDeck(name);
+  };
 
   return (
     <aside className="w-64 bg-[#1a1614] border-r border-[#3d342f] flex flex-col h-screen sticky top-0 shadow-2xl z-20">
@@ -34,7 +43,8 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 px-4 space-y-3 mt-6">
+      <nav className="flex-1 px-4 space-y-1 mt-6 overflow-y-auto">
+        <p className="px-5 text-[10px] font-black uppercase tracking-[0.2em] text-[#5d4628] mb-4">Navigation</p>
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -42,17 +52,51 @@ export default function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-5 py-4 rounded transition-all duration-300 group",
+                "flex items-center gap-3 px-5 py-3 rounded transition-all duration-300 group",
                 isActive 
                   ? "bg-[#2b2522] text-[#d9d4c7] border border-[#9a784d]/50 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]" 
                   : "text-[#9a784d] hover:text-[#d9d4c7] hover:bg-[#2b2522]/50"
               )}
             >
-              <item.icon className={cn("w-5 h-5", isActive ? "text-[#d9d4c7]" : "text-[#9a784d] group-hover:text-[#d9d4c7]")} />
-              <span className="text-sm font-bold tracking-wide">{item.name}</span>
+              <item.icon className={cn("w-4 h-4", isActive ? "text-[#d9d4c7]" : "text-[#9a784d] group-hover:text-[#d9d4c7]")} />
+              <span className="text-xs font-bold tracking-wide">{item.name}</span>
             </Link>
           );
         })}
+
+        <div className="pt-8 pb-4 flex items-center justify-between px-5">
+           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#5d4628]">Active Decks</p>
+           <button 
+            onClick={handleAddDeck}
+            className="p-1 hover:bg-[#2b2522] rounded text-[#9a784d] hover:text-[#d9d4c7] transition-colors"
+           >
+             <Plus className="w-3 h-3" />
+           </button>
+        </div>
+        
+        <div className="space-y-1">
+          {decks.map((deck) => {
+            const isActive = pathname === `/decks/${deck.id}`;
+            return (
+              <Link
+                key={deck.id}
+                href={`/decks/${deck.id}`}
+                className={cn(
+                  "flex items-center gap-3 px-5 py-3 rounded transition-all duration-300 group",
+                  isActive 
+                    ? "bg-[#2b2522] text-[#d9d4c7] border border-[#9a784d]/50 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]" 
+                    : "text-[#5d4628] hover:text-[#d9d4c7] hover:bg-[#2b2522]/20"
+                )}
+              >
+                <div className={cn(
+                  "w-1.5 h-1.5 rounded-sm transition-all",
+                  isActive ? "bg-[#d9d4c7] shadow-[0_0_8px_#d9d4c7]" : "bg-[#3d342f] group-hover:bg-[#9a784d]"
+                )} />
+                <span className="text-[11px] font-black uppercase tracking-widest truncate">{deck.name}</span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
       <div className="p-6 mt-auto">
